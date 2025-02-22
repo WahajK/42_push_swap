@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 22:03:31 by muhakhan          #+#    #+#             */
-/*   Updated: 2024/12/03 20:08:28 by muhakhan         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:18:16 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@
  * digits of the number in reverse order and then writes them to the file
  * descriptor in the correct order.
  */
-void	ft_putnbr_fd(int n, int fd)
+int	ft_putnbr_fd(long long int n, int fd)
 {
-	char	arr[11];
+	char	arr[30];
 	int		i;
+	int		count;
 
+	count = 0;
 	i = 0;
-	if (n == -2147483648)
-	{
-		write(fd, "-2147483648", 11);
-		return ;
-	}
+	if (n == 0)
+		return (write(fd, "0", 1));
 	if (n < 0)
 	{
 		write(fd, "-", 1);
 		n = -n;
+		count++;
 	}
 	while (n > 9)
 	{
@@ -46,6 +46,8 @@ void	ft_putnbr_fd(int n, int fd)
 		n /= 10;
 	}
 	arr[i++] = n + '0';
+	count += i;
 	while (--i >= 0)
 		write(fd, &arr[i], 1);
+	return (count);
 }

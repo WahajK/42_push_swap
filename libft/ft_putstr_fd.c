@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 01:27:39 by muhakhan          #+#    #+#             */
-/*   Updated: 2024/12/03 20:08:37 by muhakhan         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:32:31 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
  * This function writes the string 's' to the file descriptor 'fd'. If 's' is
  * NULL, the function does nothing.
  */
-void	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(char *s, int fd)
 {
 	if (!s)
-		return ;
+		return (write(fd, "(null)", 6));
 	write(fd, s, ft_strlen(s));
+	return (ft_strlen(s));
 }

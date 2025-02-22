@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 01:24:53 by muhakhan          #+#    #+#             */
-/*   Updated: 2024/12/03 20:08:05 by muhakhan         ###   ########.fr       */
+/*   Updated: 2024/12/09 00:33:11 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
  * @param c The character to output.
  * @param fd The file descriptor on which to write.
  */
-void	ft_putchar_fd(char c, int fd)
+int	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
+	return (1);
 }
