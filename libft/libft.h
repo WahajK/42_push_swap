@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:53:33 by muhakhan          #+#    #+#             */
-/*   Updated: 2024/12/28 16:51:37 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/09 02:14:48 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
+	struct s_list	*prev;
 }	t_list;
 
 int		ft_isalpha(int c);
