@@ -6,34 +6,52 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:13:17 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/09 22:48:48 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:36:58 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "stdio.h"
 #include "limits.h"
+
+int	ft_NaN(char *num)
+{
+	if (*num == '-')
+		num++;
+	if (!*num)
+		return (1);
+	while (*num)
+		if (!ft_isdigit(*num++))
+			return (1);
+	return (0);
+}
+
 int	check_error(char *arr[])
 {
-	int	**vals;
 	int	i;
-	int	*hash_table;
 
 	i = 0;
-	hash_table = malloc(INT_MAX * sizeof(int));
 	while (arr[i])
 	{
-		if (!hash_table[ft_atoi(arr[i])])
-			hash_table[ft_atoi(arr[i])] = 1;
-		else
+		if (ft_NaN(arr[i]))
 			return (1);
 		i++;
 	}
 	return (0);
 }
-int	main(int argc, char *argv[])
+
+void	destructor(char **arr)
 {
 	int	i;
+
+	i = 0;
+	while (arr[i] != NULL)
+		free(arr[i++]);
+	free(arr);
+}
+
+int	main(int argc, char *argv[])
+{
 	char	**arr;
 
 	arr = NULL;
@@ -44,8 +62,7 @@ int	main(int argc, char *argv[])
 		arr = ft_split(argv[1], ' ');
 		if (check_error(arr))
 			return (printf("Error\n"), 1);
-		// push_swap(arr);
-		// free_arr(arr);
+		destructor(arr);
 	}
 	return (0);
 }
