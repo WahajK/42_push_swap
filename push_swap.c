@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:13:17 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/24 01:15:49 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/26 00:28:05 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,26 @@ char	**parse_input(int argc, char *argv[])
 // WIP
 int	check_dupes(char **arr)
 {
-	ft_printf("HERE");
 	t_list 	*seen;
 	t_list	*temp;
 	int	i;
 
 	i = 0;
+	seen = NULL;
 	while (arr[i])
 	{
 		temp = seen;
-		while (!temp)
+		while (temp)
 		{
-			if (ft_strcmp((char*) (temp->content), arr[i]) != 0)
+			printf("%s %s\n", (char *) temp->content, arr[i]);
+			if (ft_strcmp((char*) (temp->content), arr[i]) == 0)
 				return (1);
 			temp = temp->next;
 		}
 		ft_lstadd_back(&seen, ft_lstnew(arr[i]));
+		i++;
 	}
-	ft_lstclear(&seen, free);
+	// ft_lstclear(&seen, free);
 	return (0);
 }
 
