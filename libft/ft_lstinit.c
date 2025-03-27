@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_lstinit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 19:25:55 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/27 02:19:28 by muhakhan         ###   ########.fr       */
+/*   Created: 2025/03/27 02:30:39 by muhakhan          #+#    #+#             */
+/*   Updated: 2025/03/27 02:31:03 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_node **head, t_node **tail, t_node *new)
+t_list	*ft_lstinit(void)
 {
-	if (!new)
-		return ;
-	if (!(*tail) && !(*head))
-	{
-		*head = new;
-		*tail = new;
-	}
-	else if (!(*head)->next)
-	{
-		(*tail)->prev = new;
-		new->next = *tail;
-		*head = new;
-	}
-	else
-	{
-		new->next = *head;
-		(*head)->prev = new;
-		*head = new;
-	}
+	t_list	*list;
+
+	list = malloc(sizeof(t_list));
+	if (!list)
+		return (NULL);
+	list->head = NULL;
+	list->tail = NULL;
+	return (list);
 }

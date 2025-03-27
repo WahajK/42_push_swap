@@ -6,13 +6,14 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:13:17 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/26 00:28:05 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/27 04:10:01 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "stdio.h"
 #include "limits.h"
+#include "libft/libft.h"
 
 int	ft_nan(char *num)
 {
@@ -67,29 +68,53 @@ char	**parse_input(int argc, char *argv[])
 // WIP
 int	check_dupes(char **arr)
 {
-	t_list 	*seen;
-	t_list	*temp;
+	t_node	*temp;
+	t_list	*list;
 	int	i;
 
 	i = 0;
-	seen = NULL;
+	list = ft_lstinit();
+	if (!list)
+		return (1);
 	while (arr[i])
 	{
-		temp = seen;
+		temp = list->head;
 		while (temp)
 		{
-			printf("%s %s\n", (char *) temp->content, arr[i]);
-			if (ft_strcmp((char*) (temp->content), arr[i]) == 0)
+			printf("%s %s\n", (char *) temp->data, arr[i]);
+			if (ft_strcmp((char*) (temp->data), arr[i]) == 0)
 				return (1);
 			temp = temp->next;
 		}
-		ft_lstadd_back(&seen, ft_lstnew(arr[i]));
+		ft_lstadd_back(&(list->head), &(list->tail), ft_lstnew(arr[i]));
 		i++;
 	}
 	// ft_lstclear(&seen, free);
 	return (0);
 }
 
+void	sx(t_node *a)
+{
+	void	*temp;
+	if (a && a->next)
+	{
+		temp = a->data;
+		a->data = a->next->data;
+		a->next->data = temp;
+	}
+}
+
+void	ss(t_node *a, t_node *b)
+{
+	sx(a);
+	sx(b);
+}
+
+void	pa(t_node *a, t_node *b)
+{
+	ft_lstadd_front(&a, b);
+	ft_lstdelone
+}
 int	main(int argc, char *argv[])
 {
 	char	**arr;

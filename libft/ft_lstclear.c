@@ -6,29 +6,18 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:30:01 by muhakhan          #+#    #+#             */
-/*   Updated: 2024/12/03 20:05:33 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/27 02:18:23 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @file ft_lstclear.c
- * @brief Clears and frees the entire list.
- *
- * This function deletes and frees the given list and every successor of that
- * list using the function 'del' and free(3). Finally, the pointer to the list
- * is set to NULL.
- *
- * @param lst The address of a pointer to a node.
- * @param del The address of the function used to delete the content of the node.
- */
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_node **head, t_node **tail)
 {
-	if (lst && *lst)
-	{
-		ft_lstclear(&(*lst)->next, del);
-		ft_lstdelone(*lst, del);
-		*lst = 0;
-	}
+	if (!head || !*head)
+		return ;
+	ft_lstclear(&(*head)->next, tail);
+	ft_lstdelone(*head);
+	*head = NULL;
+	*tail = NULL;
 }

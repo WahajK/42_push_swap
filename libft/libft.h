@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:53:33 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/23 23:28:24 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/27 02:30:14 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@
 # include <unistd.h>
 # include <stdarg.h>
 
+typedef struct s_node
+{
+	int				data;
+	struct s_node	*next;
+	struct s_node	*prev;
+}	t_node;
+
 typedef struct s_list
 {
-	void			*content;
-	struct s_list	*next;
-	struct s_list	*prev;
+	t_node	*head;
+	t_node	*tail;
 }	t_list;
 
 int		ft_isalpha(int c);
@@ -34,7 +40,7 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_atoi(const char *nptr);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
-int		ft_lstsize(t_list *lst);
+int		ft_lstsize(t_node *lst);
 int		ft_putnbr_base(unsigned long nbr, char *base);
 int		print_address(unsigned long addr);
 int		ft_putchar_fd(char c, int fd);
@@ -46,7 +52,8 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 t_list	*ft_lstlast(t_list *lst);
-t_list	*ft_lstnew(void *content);
+t_node	*ft_lstnew(int data);
+t_list	*ft_lstinit(void);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
@@ -67,11 +74,10 @@ void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_putendl_fd(char *s, int fd);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstadd_front(t_list **lst, t_list *new);
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
-void	ft_lstclear(t_list **lst, void (*del)(void *));
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
+void	ft_lstadd_back(t_node **head, t_node **tail, t_node *new);
+void	ft_lstadd_front(t_node **head, t_node **tail, t_node *new);
+void	ft_lstdelone(t_node *node);
+void	ft_lstclear(t_node **head, t_node **tail);
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 
 #endif

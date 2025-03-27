@@ -6,31 +6,21 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:24:55 by muhakhan          #+#    #+#             */
-/*   Updated: 2024/12/04 18:31:17 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/27 02:18:46 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @file ft_lstnew.c
- * @brief Creates a new list element.
- *
- * This function allocates memory for a new list element, initializes its
- * content with the provided value, and sets its next pointer to NULL.
- *
- * @param content The content to initialize the new list element with.
- * @return A pointer to the new list element, or NULL if memory allocation
- *         fails.
- */
-t_list	*ft_lstnew(void *content)
+t_node	*ft_lstnew(int data)
 {
-	t_list	*ret;
+	t_node	*temp;
 
-	ret = malloc(sizeof(t_list));
-	if (!ret)
+	temp = malloc(sizeof(t_node));
+	if (!temp)
 		return (0);
-	ret->content = content;
-	ret->next = NULL;
-	return (ret);
+	temp->data = data;
+	temp->next = NULL;
+	temp->prev = NULL;
+	return (temp);
 }
