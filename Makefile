@@ -9,6 +9,7 @@ LIBFT_DIR = libft
 all: $(NAME)
 
 $(NAME): $(OBJECTS) $(LIBFT)
+	make -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):

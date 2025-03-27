@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:13:17 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/27 04:10:01 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/27 22:48:07 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int	check_dupes(char **arr)
 		temp = list->head;
 		while (temp)
 		{
-			printf("%s %s\n", (char *) temp->data, arr[i]);
-			if (ft_strcmp((char*) (temp->data), arr[i]) == 0)
+			printf("%d %s\n", temp->data, arr[i]);
+			if (ft_strcmp(ft_itoa(temp->data), arr[i]) == 0)
 				return (1);
 			temp = temp->next;
 		}
-		ft_lstadd_back(&(list->head), &(list->tail), ft_lstnew(arr[i]));
+		ft_lstadd_back(&(list->head), &(list->tail), ft_lstnew(ft_atoi(arr[i])));
 		i++;
 	}
 	// ft_lstclear(&seen, free);
@@ -95,7 +95,7 @@ int	check_dupes(char **arr)
 
 void	sx(t_node *a)
 {
-	void	*temp;
+	int	temp;
 	if (a && a->next)
 	{
 		temp = a->data;
@@ -110,11 +110,11 @@ void	ss(t_node *a, t_node *b)
 	sx(b);
 }
 
-void	pa(t_node *a, t_node *b)
-{
-	ft_lstadd_front(&a, b);
-	ft_lstdelone
-}
+// void	pa(t_node *a, t_node *b)
+// {
+// 	ft_lstadd_front(&a, b);
+// 	ft_lstdelone
+// }
 int	main(int argc, char *argv[])
 {
 	char	**arr;
