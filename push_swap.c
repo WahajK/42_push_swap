@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:13:17 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/30 16:19:41 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:31:37 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,9 +282,9 @@ void	set_index_median(t_node *head)
 	{
 		head->index = i;
 		if (i <= median)
-			head->above_median = false;
-		else
 			head->above_median = true;
+		else
+			head->above_median = false;
 		head = head->next;
 		i++;
 	}
