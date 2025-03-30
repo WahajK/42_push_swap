@@ -5,3 +5,4 @@ push_swap
 *.o
 */*.o
 */*.a
+linked_list.c

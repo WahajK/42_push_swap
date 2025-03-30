@@ -2,7 +2,7 @@ SOURCES = push_swap.c
 OBJECTS = $(SOURCES:.c=.o)
 NAME = push_swap
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LIBFT = libft/libft.a
 LIBFT_DIR = libft
 
@@ -25,3 +25,5 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	make -C $(LIBFT_DIR) fclean
+
+re: fclean all

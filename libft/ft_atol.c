@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:21:01 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/29 19:25:01 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/30 00:40:18 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ctype.h>
-#include <limits.h>
+#include "limits.h"
 
 static int	ft_isspace(char c)
 {
 	return (c == ' ' || (c >= 9 && c <= 13));
 }
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str, int *error)
 {
-	int	result;
-	int	sign;
+	long	result;
+	int		sign;
 
 	result = 0;
 	sign = 1;
@@ -34,6 +33,10 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	while (*str >= '0' && *str <= '9')
+	{
 		result = result * 10 + (*str++ - '0');
+		if (result > INT_MAX || result < INT_MIN)
+			*error = -1;
+	}
 	return (result * sign);
 }

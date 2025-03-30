@@ -6,13 +6,13 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:13:17 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/27 22:48:07 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/30 00:46:00 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "stdio.h"
-#include "limits.h"
+#include <stdio.h>
+#include <limits.h>
 #include "libft/libft.h"
 
 int	ft_nan(char *num)
@@ -45,9 +45,14 @@ void	destructor(char **arr)
 {
 	int	i;
 
+	if (!arr)
+		return ;
 	i = 0;
-	while (arr[i] != NULL)
-		free(arr[i++]);
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
 	free(arr);
 }
 
@@ -56,87 +61,236 @@ char	**parse_input(int argc, char *argv[])
 	int		i;
 	char	**arr;
 
-	i = 0;
-	arr = malloc (argc * sizeof(char *));
-	while (argv[i])
+	arr = malloc((argc) * sizeof(char *));
+	if (!arr)
+		return (NULL);
+	i = 1;
+	while (i < argc)
 	{
-		arr[i] = ft_strdup(argv[i]);
+		arr[i - 1] = ft_strdup(argv[i]);
+		if (!arr[i - 1])
+		{
+			destructor(arr);
+			return (NULL);
+		}
 		i++;
 	}
+	arr[argc - 1] = NULL;
 	return (arr);
 }
-// WIP
-int	check_dupes(char **arr)
-{
-	t_node	*temp;
-	t_list	*list;
-	int	i;
 
-	i = 0;
-	list = ft_lstinit();
-	if (!list)
-		return (1);
-	while (arr[i])
-	{
-		temp = list->head;
-		while (temp)
-		{
-			printf("%d %s\n", temp->data, arr[i]);
-			if (ft_strcmp(ft_itoa(temp->data), arr[i]) == 0)
-				return (1);
-			temp = temp->next;
-		}
-		ft_lstadd_back(&(list->head), &(list->tail), ft_lstnew(ft_atoi(arr[i])));
-		i++;
-	}
-	// ft_lstclear(&seen, free);
-	return (0);
-}
-
-void	sx(t_node *a)
+void	sx(t_node **a)
 {
 	int	temp;
-	if (a && a->next)
-	{
-		temp = a->data;
-		a->data = a->next->data;
-		a->next->data = temp;
-	}
+
+	if (!a || !(*a)->next)
+		return ;
+	temp = (*a)->data;
+	(*a)->data = (*a)->next->data;
+	(*a)->next->data = temp;
 }
 
-void	ss(t_node *a, t_node *b)
+void	ss(t_node **a, t_node **b)
 {
 	sx(a);
 	sx(b);
 }
 
-// void	pa(t_node *a, t_node *b)
-// {
-// 	ft_lstadd_front(&a, b);
-// 	ft_lstdelone
-// }
+void	px(t_list **x, t_list **swap)
+{
+	t_node	*temp;
+
+	if (!(*swap) || !(*swap)->head)
+		return ;
+	temp = (*swap)->head;
+	if (!(*swap)->head->next)
+	{
+		(*swap)->head = NULL;
+		(*swap)->tail = NULL;
+	}
+	else
+	{
+		(*swap)->head = (*swap)->head->next;
+		(*swap)->head->prev = NULL;
+	}
+	temp->next = (*x)->head;
+	if ((*x)->head)
+		(*x)->head->prev = temp;
+	else
+		(*x)->tail = temp;
+	(*x)->head = temp;
+}
+
+void	rx(t_list **x)
+{
+	t_node	*temp;
+
+	if (!x || !(*x)->head || !(*x)->head->next)
+		return ;
+	temp = (*x)->head;
+	(*x)->head = (*x)->head->next;
+	(*x)->head->prev = NULL;
+	temp->next = NULL;
+	(*x)->tail->next = temp;
+	temp->prev = (*x)->tail;
+	(*x)->tail = temp;
+}
+
+void	rr(t_list **a, t_list **b)
+{
+	rx(a);
+	rx(b);
+}
+
+void	rrx(t_list **x)
+{
+	t_node	*temp;
+
+	if (!(*x) || !(*x)->tail || !(*x)->tail->prev)
+		return ;
+	temp = (*x)->tail;
+	(*x)->tail = (*x)->tail->prev;
+	(*x)->tail->next = NULL;
+	temp->prev = NULL;
+	temp->next = (*x)->head;
+	(*x)->head->prev = temp;
+	(*x)->head = temp;
+}
+
+void	rrr(t_list **a, t_list **b)
+{
+	rrx(a);
+	rrx(b);
+}
+
+int	check_dupes(t_list **a, char **arr)
+{
+	int		i;
+	long	num;
+	t_node	*temp;
+
+	i = 0;
+	while (arr[i])
+	{
+		num = ft_atol(arr[i], &i);
+		if (i == -1)
+			return (free_stack(a), 1);
+		temp = (*a)->head;
+		while (temp)
+		{
+			if (num > INT_MAX || num < INT_MIN || temp->data == num)
+			{
+				return (free_stack(a), 1);
+			}
+			temp = temp->next;
+		}
+		ft_lstadd_back(&((*a)->head), &((*a)->tail), ft_lstnew(num));
+		i++;
+	}
+	return (0);
+}
+
+int	is_sorted(t_list **a)
+{
+	t_node	*temp;
+
+	temp = (*a)->head;
+	while (temp->next)
+	{
+		if (temp->data > temp->next->data)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+void	free_stack(t_list **a)
+{
+	ft_lstclear(&((*a)->head), &((*a)->tail));
+	free(*a);
+}
+
+t_node	*find_max(t_node *head)
+{
+	t_node	*max;
+
+	if (!head)
+		return (NULL);
+	max = head;
+	while (head)
+	{
+		if (head->data > max->data)
+			max = head;
+		head = head->next;
+	}
+	return (max);
+}
+
+void	sort_three(t_list **a)
+{
+	t_node	*max;
+
+	max = find_max((*a)->head);
+	if (!max)
+		return ;
+	if (max == (*a)->head)
+		rx(a);
+	else if ((*a)->head->next == max)
+		rrx(a);
+	if ((*a)->head->data > (*a)->head->next->data)
+		sx(&((*a)->head));
+}
+
+int	push_swap(char **arr)
+{
+	t_list	*a;
+	// t_list	*b;
+
+	a = ft_lstinit();
+	// b = ft_lstinit();
+	if (!a)
+		return (1);
+	if (check_dupes(&a, arr))
+		return (1);
+	if (!is_sorted(&a))
+	{
+		if (ft_lstsize(a->head) == 2)
+			sx(&(a->head));
+		else if (ft_lstsize(a->head) == 3)
+			sort_three(&a);
+		// else
+		// 	turk_sort(&a, &b);
+	}
+	if (is_sorted(&a))
+		ft_printf("SORTED!");
+	free_stack(&a);
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	char	**arr;
 
 	arr = NULL;
 	if (argc < 2 || !argv[1][0])
-		return (-1);
+		return (1);
 	if (argc == 2)
 	{
 		arr = ft_split(argv[1], ' ');
-		if (check_error(arr))
+		if (!arr || check_error(arr))
 			return (ft_printf("Error\n"), destructor(arr), 1);
-	}
-	else
-	{
-		arr = parse_input(argc, argv + 1);
-		if (check_error(argv + 1))
+		if (push_swap(arr))
 			return (ft_printf("Error\n"), destructor(arr), 1);
+		destructor(arr);
+		return (0);
 	}
-	if (check_dupes(arr))
+	arr = parse_input(argc, argv);
+	if (!arr)
+		return (1);
+	if (check_error(arr))
 		return (ft_printf("Error\n"), destructor(arr), 1);
-	
+	if (push_swap(arr))
+		return (ft_printf("Error\n"), destructor(arr), 1);
 	destructor(arr);
 	return (0);
 }

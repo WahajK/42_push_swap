@@ -12,7 +12,7 @@ SRCS = \
 	ft_strmapi.c ft_itoa.c ft_printf.c ft_strcmp.c \
 	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c \
 	ft_lstclear.c ft_lstdelone.c ft_lstnew.c ft_lstinit.c \
-	ft_lstsize.c 
+	ft_lstsize.c ft_atol.c
 
 OBJ = $(SRCS:.c=.o)
 BOBJECTS = $(BONUSSRCS:.c=.o)
@@ -30,6 +30,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean clean all
+re: fclean all
 
 .PHONY: all bonus clean fclean re
