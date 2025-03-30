@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:13:17 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/30 00:46:00 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/30 01:55:57 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,13 +241,87 @@ void	sort_three(t_list **a)
 		sx(&((*a)->head));
 }
 
+void	set_index_median(t_node *head)
+{
+	int	i;
+	int	median;
+
+	if (!head)
+		return ;
+	i = 0;
+	median = ft_lstsize(head) / 2;
+	while (head)
+	{
+		head->index = i;
+		if (i <= median)
+			head->above_median = false;
+		else
+			head->above_median = true;
+		head = head->next;
+		i++;
+	}
+}
+
+void	set_target(t_node *a, t_node *b)
+{
+	t_node	*b_iterator;
+	t_node	*target;
+	long	best_match;
+
+	while (a)
+	{
+		best_match = LONG_MIN;
+		b_iterator = b;
+		while (b_iterator)
+		{
+			if (b_iterator->data < a->data
+				&& b_iterator->data > best_match)
+			{
+				best_match = b_iterator->data;
+				target = b_iterator;
+			}
+			b_iterator = b_iterator->next;
+		}
+		if (best_match == LONG_MIN)
+			a->target_node = find_max(b);
+		else
+			a->target_node = target;
+		a = a->next;
+	}
+}
+
+void	init_nodes_a(t_list **a, t_list **b)
+{
+	set_index_median((*a)->head);
+	set_index_median((*b)->head);
+	set_target_a((*a)->head, (*b)->head);
+	calculate_cost_a(a, b);
+	set_cheapest(a);
+}
+
+void	turk_sort(t_list **a, t_list **b)
+{
+	int	len;
+
+	len = ft_lstsize((*a)->head);
+	if (len-- > 3 && !is_sorted(a));
+		px(b, a);
+	if (len-- > 3 && !is_sorted(a));
+		px(b, a);
+	while (len-- > 3 && !is_sorted(a))
+	{
+		init_nodes_a(a, b);
+	}
+	
+}
+
 int	push_swap(char **arr)
 {
 	t_list	*a;
-	// t_list	*b;
+	t_list	*b;
 
 	a = ft_lstinit();
-	// b = ft_lstinit();
+	b = ft_lstinit();
 	if (!a)
 		return (1);
 	if (check_dupes(&a, arr))
@@ -258,8 +332,8 @@ int	push_swap(char **arr)
 			sx(&(a->head));
 		else if (ft_lstsize(a->head) == 3)
 			sort_three(&a);
-		// else
-		// 	turk_sort(&a, &b);
+		else
+			turk_sort(&a, &b);
 	}
 	if (is_sorted(&a))
 		ft_printf("SORTED!");
