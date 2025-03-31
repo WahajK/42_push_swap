@@ -6,11 +6,12 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:21:01 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/30 00:40:18 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/31 20:26:45 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "limits.h"
+#include <stdio.h>
 
 static int	ft_isspace(char c)
 {
@@ -35,7 +36,7 @@ long	ft_atol(const char *str, int *error)
 	while (*str >= '0' && *str <= '9')
 	{
 		result = result * 10 + (*str++ - '0');
-		if (result > INT_MAX || result < INT_MIN)
+		if ((result * sign) > INT_MAX || (result * sign) < INT_MIN)
 			*error = -1;
 	}
 	return (result * sign);
