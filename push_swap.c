@@ -6,7 +6,7 @@
 /*   By: muhakhan <muhakhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 02:13:17 by muhakhan          #+#    #+#             */
-/*   Updated: 2025/03/30 16:31:37 by muhakhan         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:36:03 by muhakhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,7 +375,7 @@ t_node	*get_cheapest(t_node *head)
 			return (head);
 		head = head->next;
 	}
-	return NULL;
+	return (NULL);
 }
 
 void	rr_both(t_list **a, t_list **b, t_node *cheapest)
@@ -520,7 +520,7 @@ int	push_swap(char **arr)
 	a = ft_lstinit();
 	b = ft_lstinit();
 	if (!a || check_dupes(&a, arr))
-		return (1);
+		return (free_stack(&b), 1);
 	if (!b)
 	{
 		free_stack(&a);
